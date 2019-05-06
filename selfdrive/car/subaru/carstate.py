@@ -132,7 +132,7 @@ class CarState(object):
     self.v_wheel_rr = cp.vl["Wheel_Speeds"]['RR'] * CV.KPH_TO_MS
 
     v_wheel = (self.v_wheel_fl + self.v_wheel_fr + self.v_wheel_rl + self.v_wheel_rr) / 4.
-    # Kalman filter, even though Hyundai raw wheel speed is heaviliy filtered by default
+    # Kalman filter, even though Subaru raw wheel speed is heaviliy filtered by default
     if abs(v_wheel - self.v_ego) > 2.0:  # Prevent large accelerations when car starts at non zero speed
       self.v_ego_kf.x = np.matrix([[v_wheel], [0.0]])
 
