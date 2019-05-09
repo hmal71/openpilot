@@ -163,7 +163,6 @@ class CarState(object):
       self.v_cruise_pcm = cp_cam.vl["ES_DashStatus"]["Cruise_Set_Speed"] * CV.MPH_TO_KPH
       self.es_distance_msg = copy.copy(cp_cam.vl["ES_Distance"])
       self.es_lkas_msg = copy.copy(cp_cam.vl["ES_LKAS_State"])
-      self.steer_error = False
     else:
       self.v_cruise_pcm = cp_cam.vl["ES_DashStatus"]["Cruise_Set_Speed"]
-      self.steer_error = cp.vl["Steering_Torque"]["LKA_Lockout"]
+      self.steer_not_allowed = cp.vl["Steering_Torque"]["LKA_Lockout"
