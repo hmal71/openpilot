@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
   int spinner_img_y = 260;
   int spinner_img_xc = (fb_w/2);
   int spinner_img_yc = (fb_h/2)-100;
-  int spinner_comma_img = nvgCreateImage(vg, "../../assets/img_spinner_comma3.png", 0);
+  int spinner_comma_img = nvgCreateImage(vg, "../../assets/img_spinner_comma.png", 0);
   assert(spinner_comma_img >= 0);
 
   for (int cnt = 0; ; cnt++) {
