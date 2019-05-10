@@ -76,12 +76,12 @@ class CarInterface(object):
       ret.mass = 1568 + std_cargo
       ret.wheelbase = 2.67
       ret.centerToFront = ret.wheelbase * 0.5
-      ret.steerRatio = 14
-      tire_stiffness_factor = 1.0
+      ret.steerRatio = 20            # learned, 14 stock
+      tire_stiffness_factor = 0.78
       ret.steerActuatorDelay = 0.4
-      ret.steerKf = 0.00004
+      ret.steerKf = 0.00003
       ret.steerKiBP, ret.steerKpBP = [[0.,10.], [0.,10.]]
-      ret.steerKpV, ret.steerKiV = [[0.07,0.15], [0.007,0.015]]
+      ret.steerKpV, ret.steerKiV = [[0.07,0.15], [0.02,0.02]]
       ret.steerMaxBP = [0.] # m/s
       ret.steerMaxV = [1.]
 
@@ -214,7 +214,7 @@ class CarInterface(object):
     else:
       self.can_invalid_count = 0
 
-    if self.CS.steer_error:
+    if self.CS.steer_not_allowed:
       events.append(create_event('steerUnavailable', [ET.NO_ENTRY, ET.IMMEDIATE_DISABLE, ET.PERMANENT]))
 
     if ret.seatbeltUnlatched:

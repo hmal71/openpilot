@@ -38,7 +38,7 @@ static void subaru_rx_hook(CAN_FIFOMailBox_TypeDef *to_push) {
 
   // enter controls on rising edge of ACC, exit controls on ACC off
   if ((addr == 0x240) && (bus_number == 0)) {
-      int cruise_engaged = (to_push->RDHR >> 9) & 1;
+    int cruise_engaged = (to_push->RDHR >> 9) & 1;
     if (cruise_engaged && !subaru_cruise_engaged_last) {
       controls_allowed = 1;
     } else if (!cruise_engaged) {
@@ -54,7 +54,6 @@ static void subaru_rx_hook(CAN_FIFOMailBox_TypeDef *to_push) {
     }
     subaru_cruise_engaged_last = cruise_engaged;
   }
-
 }
 
 static int subaru_tx_hook(CAN_FIFOMailBox_TypeDef *to_send) {
@@ -65,15 +64,14 @@ static int subaru_tx_hook(CAN_FIFOMailBox_TypeDef *to_send) {
     int desired_torque = 0;
     if (addr == 0x122) {
     desired_torque = ((to_send->RDLR >> 16) & 0x1FFF);
-    desired_torque = to_signed(desired_torque, 13);
     } else if (addr == 0x164) {
     desired_torque = ((to_send->RDLR >> 8) & 0x1FFF);
-    desired_torque = to_signed(desired_torque, 13);
     }
     
     int violation = 0;
     uint32_t ts = TIM2->CNT;
-    
+    desired_torque = to_signed(desired_torque, 13);
+
     if (controls_allowed) {
 
       // *** global torque limit check ***
@@ -116,7 +114,6 @@ static int subaru_tx_hook(CAN_FIFOMailBox_TypeDef *to_send) {
     }
 
   }
-
   return true;
 }
 
@@ -125,13 +122,13 @@ static int subaru_fwd_hook(int bus_num, CAN_FIFOMailBox_TypeDef *to_fwd) {
   // shifts bits 29 > 11
   int32_t addr = to_fwd->RIR >> 21;
 
-  // forward CAN 0 > 1
+  // forward CAN 0 > 2
   if (bus_num == 0) {
 
-    return 1; // ES CAN
+    return 2; // ES CAN
   }
   // forward CAN 1 > 0, except ES_LKAS
-  else if (bus_num == 1) {
+  else if (bus_num == 2) {
 
     // outback 2015
     if (addr == 0x164) {

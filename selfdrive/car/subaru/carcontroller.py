@@ -61,6 +61,9 @@ class CarController(object):
       # limits due to driver torque
       apply_steer = apply_std_steer_torque_limits(apply_steer, self.apply_steer_last, CS.steer_torque_driver, P)
 
+      if not enabled:
+        apply_steer = 0.
+
       if self.car_fingerprint in (CAR.OUTBACK, CAR.LEGACY):
 
         # add noise to prevent lkas fault from constant torque value over 1s
@@ -85,7 +88,7 @@ class CarController(object):
         can_sends.append(subarucan.create_es_lkas(self.packer, CS.es_lkas_msg, visual_alert))
         self.es_lkas_cnt = CS.es_lkas_msg["Counter"]
 
-    if self.car_fingerprint in (CAR.OUTBACK, CAR.LEGACY) and not enabled and CS.acc_active == 1:
+    if self.car_fingerprint in (CAR.OUTBACK, CAR.LEGACY) and pcm_cancel_cmd:
       can_sends.append(subarucan.create_door_control(self.packer))
 
     sendcan.send(can_list_to_can_capnp(can_sends, msgtype='sendcan').to_bytes())
