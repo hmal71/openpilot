@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
   NVGcontext *vg = nvgCreateGLES3(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
   assert(vg);
 
-  int font = nvgCreateFont(vg, "Bold", "../../assets/OpenSans-SemiBold.ttf");
+  int font = nvgCreateFont(vg, "Bold", "../../assets/Montserrat-Bold.ttf");
   assert(font >= 0);
 
   int spinner_img = nvgCreateImage(vg, "../../assets/img_spinner_track.png", 0);
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     // background
     nvgBeginPath(vg);
     NVGpaint bg = nvgLinearGradient(vg, fb_w, 0, fb_w, fb_h,
-    nvgRGBA(0, 0, 0, 175), nvgRGBA(0, 0, 0, 255));
+    nvgRGBA(0, 0, 0, 255), nvgRGBA(0, 0, 0, 255));
     nvgFillPaint(vg, bg);
     nvgRect(vg, 0, 0, fb_w, fb_h);
     nvgFill(vg);

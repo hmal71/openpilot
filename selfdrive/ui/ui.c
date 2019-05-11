@@ -300,7 +300,7 @@ static void set_brightness(UIState *s, int brightness) {
       fprintf(f, "%d", brightness);
       fclose(f);
       last_brightness = brightness;
-    }
+    } 
   }
 }
 
@@ -1150,7 +1150,7 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   } else {
     nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 100));
   }
-  nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 148, "MAX", NULL);
+  nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 148, "SET", NULL);
 
   // Draw Speed Text
   nvgFontFace(s->vg, "sans-bold");
@@ -2336,7 +2336,8 @@ int main() {
     }
   }
 
-  set_awake(s, true);
+  //set_awake(s, true);
+
 
   slplay_destroy();
 
