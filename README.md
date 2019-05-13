@@ -120,10 +120,13 @@ Community Maintained Cars
 | ---------------------| -------------------------| ---------------------| --------| ---------------| -----------------| ---------------|-------------------|
 | Honda                | Fit 2018                 | Honda Sensing        | Yes     | Yes            | 25mph<sup>1</sup>| 12mph          | Inverted Nidec    |
 | Tesla                | Model S 2012-13          | All                  | Yes     | Not yet        | Not applicable   | 0mph           | Custom<sup>8</sup>|
+| Subaru               | Legacy 2015              | EyeSight             | Yes     | No             | Not applicable   | 0mph           | Custom<sup>9</sup>|
+| Subaru               | Outback 2015             | EyeSight             | Yes     | No             | Not applicable   | 0mph           | Custom<sup>9</sup>|
 
 [[Honda Fit Pull Request]](https://github.com/commaai/openpilot/pull/266). <br />
 [[Tesla Model S Pull Request]](https://github.com/commaai/openpilot/pull/246) <br />
 <sup>8</sup>Community built Giraffe, find more information here [Community Tesla Giraffe](https://github.com/jeankalud/neo/tree/tesla_giraffe/giraffe/tesla) <br />
+<sup>9</sup>Community built Giraffe, find more information here [Community Subaru Giraffe](http://dattechweb.com/subaru-giraffe) <br />
 
 Community Maintained Cars are not confirmed by comma.ai to meet our [safety model](https://github.com/commaai/openpilot/blob/devel/SAFETY.md). Be extra cautious using them.
 
