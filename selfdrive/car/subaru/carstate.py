@@ -165,4 +165,8 @@ class CarState(object):
       self.es_lkas_msg = copy.copy(cp_cam.vl["ES_LKAS_State"])
     else:
       self.v_cruise_pcm = cp_cam.vl["ES_DashStatus"]["Cruise_Set_Speed"]
+<<<<<<< HEAD
       self.steer_not_allowed = cp.vl["Steering_Torque"]["LKA_Lockout"
+=======
+      self.steer_not_allowed = cp.vl["Steering_Torque"]["LKA_Lockout"]
+>>>>>>> 5cc4e3d01e2dcff00b90c82e190529f015b3669c

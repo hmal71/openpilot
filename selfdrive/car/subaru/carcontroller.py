@@ -62,7 +62,11 @@ class CarController(object):
       apply_steer = apply_std_steer_torque_limits(apply_steer, self.apply_steer_last, CS.steer_torque_driver, P)
 
       if not enabled:
+<<<<<<< HEAD
 	      apply_steer = 0.
+=======
+        apply_steer = 0.
+>>>>>>> 5cc4e3d01e2dcff00b90c82e190529f015b3669c
 
       if self.car_fingerprint in (CAR.OUTBACK, CAR.LEGACY):
 
