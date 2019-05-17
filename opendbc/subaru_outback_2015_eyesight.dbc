@@ -198,6 +198,7 @@ BO_ 356 ES_LKAS: 8 XXX
  SG_ LKAS_Command : 8|13@1- (-1,0) [-4096|4096] "" XXX
 
 BO_ 358 ES_DashStatus: 8 XXX
+ SG_ Set_Distance : 7|3@0+ (1,0) [1|4] "" XXX
  SG_ Counter : 39|3@0+ (1,0) [0|7] "" XXX
  SG_ Obstacle_Distance : 48|4@1+ (1,0) [0|15] "" XXX
  SG_ Cruise_Off : 22|1@0+ (1,0) [0|3] "" XXX
@@ -207,7 +208,7 @@ BO_ 358 ES_DashStatus: 8 XXX
  SG_ Untitled_Blank : 18|1@0+ (1,0) [0|3] "" XXX
  SG_ NEW_SIGNAL_6_Blank : 21|1@0+ (1,0) [0|3] "" XXX
  SG_ NEW_SIGNAL_5_Blank : 33|1@1+ (1,0) [0|3] "" XXX
- SG_ NEW_SIGNAL_4_Blank : 34|1@1+ (1,0) [0|7] "" XXX
+ SG_ Cruise_Activatable : 34|1@1+ (1,0) [0|7] "" XXX
  SG_ NEW_SIGNAL_1 : 35|1@0+ (1,0) [0|31] "" XXX
  SG_ Steep_Hill_Disengage : 44|1@0+ (1,0) [0|3] "" XXX
  SG_ ES_Error : 32|1@1+ (1,0) [0|3] "" XXX
