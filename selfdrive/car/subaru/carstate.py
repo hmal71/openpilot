@@ -22,6 +22,7 @@ def get_powertrain_can_parser(CP):
     ("LEFT_BLINKER", "Dashlights", 0),
     ("RIGHT_BLINKER", "Dashlights", 0),
     ("SEATBELT_FL", "Dashlights", 0),
+    
     ("FL", "Wheel_Speeds", 0),
     ("FR", "Wheel_Speeds", 0),
     ("RL", "Wheel_Speeds", 0),
@@ -59,39 +60,41 @@ def get_powertrain_can_parser(CP):
 def get_camera_can_parser(CP):
   signals = [
     ("Cruise_Set_Speed", "ES_DashStatus", 0),
-
-    ("Counter", "ES_Distance", 0),
-    ("Signal1", "ES_Distance", 0),
-    ("Signal2", "ES_Distance", 0),
-    ("Main", "ES_Distance", 0),
-    ("Signal3", "ES_Distance", 0),
-
-    ("Checksum", "ES_LKAS_State", 0),
-    ("Counter", "ES_LKAS_State", 0),
-    ("Keep_Hands_On_Wheel", "ES_LKAS_State", 0),
-    ("Empty_Box", "ES_LKAS_State", 0),
-    ("Signal1", "ES_LKAS_State", 0),
-    ("LKAS_ACTIVE", "ES_LKAS_State", 0),
-    ("Signal2", "ES_LKAS_State", 0),
-    ("Backward_Speed_Limit_Menu", "ES_LKAS_State", 0),
-    ("LKAS_ENABLE_3", "ES_LKAS_State", 0),
-    ("Signal3", "ES_LKAS_State", 0),
-    ("LKAS_ENABLE_2", "ES_LKAS_State", 0),
-    ("Signal4", "ES_LKAS_State", 0),
-    ("FCW_Cont_Beep", "ES_LKAS_State", 0),
-    ("FCW_Repeated_Beep", "ES_LKAS_State", 0),
-    ("Throttle_Management_Activated", "ES_LKAS_State", 0),
-    ("Traffic_light_Ahead", "ES_LKAS_State", 0),
-    ("Right_Depart", "ES_LKAS_State", 0),
-    ("Signal5", "ES_LKAS_State", 0),
-
   ]
 
   checks = [
     ("ES_DashStatus", 10),
   ]
 
-  return CANParser(DBC[CP.carFingerprint]['pt'], signals, checks, 2)
+  if CP.carFingerprint not in (CAR.OUTBACK, CAR.LEGACY):
+    signals += [
+      ("Counter", "ES_Distance", 0),
+      ("Signal1", "ES_Distance", 0),
+      ("Signal2", "ES_Distance", 0),
+      ("Main", "ES_Distance", 0),
+      ("Signal3", "ES_Distance", 0),
+
+      ("Checksum", "ES_LKAS_State", 0),
+      ("Counter", "ES_LKAS_State", 0),
+      ("Keep_Hands_On_Wheel", "ES_LKAS_State", 0),
+      ("Empty_Box", "ES_LKAS_State", 0),
+      ("Signal1", "ES_LKAS_State", 0),
+      ("LKAS_ACTIVE", "ES_LKAS_State", 0),
+      ("Signal2", "ES_LKAS_State", 0),
+      ("Backward_Speed_Limit_Menu", "ES_LKAS_State", 0),
+      ("LKAS_ENABLE_3", "ES_LKAS_State", 0),
+      ("Signal3", "ES_LKAS_State", 0),
+      ("LKAS_ENABLE_2", "ES_LKAS_State", 0),
+      ("Signal4", "ES_LKAS_State", 0),
+      ("FCW_Cont_Beep", "ES_LKAS_State", 0),
+      ("FCW_Repeated_Beep", "ES_LKAS_State", 0),
+      ("Throttle_Management_Activated", "ES_LKAS_State", 0),
+      ("Traffic_light_Ahead", "ES_LKAS_State", 0),
+      ("Right_Depart", "ES_LKAS_State", 0),
+      ("Signal5", "ES_LKAS_State", 0),
+    ]
+
+  return CANParser(DBC[CP.carFingerprint]['pt'], signals, checks, 1)
 
 class CarState(object):
   def __init__(self, CP):
