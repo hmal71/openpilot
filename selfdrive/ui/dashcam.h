@@ -185,7 +185,7 @@ void draw_date_time(UIState *s) {
     nvgStroke(s->vg);
 
   nvgFontSize(s->vg, 60);
-    nvgFontFace(s->vg, "sans-semibold");
+    nvgFontFace(s->vg, "Montserrat-semibold");
     nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 200));
     nvgText(s->vg,rect_x+231,rect_y+55,now,NULL);
 }

@@ -52,23 +52,23 @@ void bb_ui_draw_vision_alert( UIState *s, int va_size, int va_color,
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_BASELINE);
 
   if (va_size == ALERTSIZE_SMALL) {
-    nvgFontFace(s->vg, "sans-semibold");
+    nvgFontFace(s->vg, "Montserrat-semibold");
     nvgFontSize(s->vg, 40*2.5);
     nvgText(s->vg, alr_x+alr_w/2, alr_y+alr_h/2+15, va_text1, NULL);
   } else if (va_size== ALERTSIZE_MID) {
-    nvgFontFace(s->vg, "sans-bold");
+    nvgFontFace(s->vg, "Montserrat-bold");
     nvgFontSize(s->vg, 48*2.5);
     nvgText(s->vg, alr_x+alr_w/2, alr_y+alr_h/2-45, va_text1, NULL);
-    nvgFontFace(s->vg, "sans-regular");
+    nvgFontFace(s->vg, "Montserrat-regular");
     nvgFontSize(s->vg, 36*2.5);
     nvgText(s->vg, alr_x+alr_w/2, alr_y+alr_h/2+75, va_text2, NULL);
   } else if (va_size== ALERTSIZE_FULL) {
     nvgFontSize(s->vg, (longAlert1?72:96)*2.5);
-    nvgFontFace(s->vg, "sans-bold");
+    nvgFontFace(s->vg, "Montserrat-bold");
     nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
     nvgTextBox(s->vg, alr_x, alr_y+(longAlert1?360:420), alr_w-60, va_text1, NULL);
     nvgFontSize(s->vg, 48*2.5);
-    nvgFontFace(s->vg, "sans-regular");
+    nvgFontFace(s->vg, "Montserrat-regular");
     nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_BOTTOM);
     nvgTextBox(s->vg, alr_x, alr_h-(longAlert1?300:360), alr_w-60, va_text2, NULL);
   }
@@ -219,12 +219,12 @@ int bb_ui_draw_measure( UIState *s,  const char* bb_value, const char* bb_uom, c
   	dx = (int)(bb_uomFontSize*2.5/2);
    }
   //print value
-  nvgFontFace(s->vg, "sans-semibold");
+  nvgFontFace(s->vg, "Montserrat-semibold");
   nvgFontSize(s->vg, bb_valueFontSize*2.5);
   nvgFillColor(s->vg, bb_valueColor);
   nvgText(s->vg, bb_x-dx/2, bb_y+ (int)(bb_valueFontSize*2.5)+5, bb_value, NULL);
   //print label
-  nvgFontFace(s->vg, "sans-regular");
+  nvgFontFace(s->vg, "Montserrat-regular");
   nvgFontSize(s->vg, bb_labelFontSize*2.5);
   nvgFillColor(s->vg, bb_labelColor);
   nvgText(s->vg, bb_x, bb_y + (int)(bb_valueFontSize*2.5)+5 + (int)(bb_labelFontSize*2.5)+5, bb_label, NULL);
@@ -235,7 +235,7 @@ int bb_ui_draw_measure( UIState *s,  const char* bb_value, const char* bb_uom, c
 	  int ry = bb_y + (int)(bb_valueFontSize*2.5/2)+25;
 	  nvgTranslate(s->vg,rx,ry);
 	  nvgRotate(s->vg, -1.5708); //-90deg in radians
-	  nvgFontFace(s->vg, "sans-regular");
+	  nvgFontFace(s->vg, "Montserrat-regular");
 	  nvgFontSize(s->vg, (int)(bb_uomFontSize*2.5));
 	  nvgFillColor(s->vg, bb_uomColor);
 	  nvgText(s->vg, 0, 0, bb_uom, NULL);
@@ -391,12 +391,12 @@ void bb_draw_button( UIState *s, int btn_id) {
   nvgStroke(s->vg);
 
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_BASELINE);
-  nvgFontFace(s->vg, "sans-regular");
+  nvgFontFace(s->vg, "Montserrat-regular");
   nvgFontSize(s->vg, 14*2.5);
   nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 200));
   nvgText(s->vg, viz_button_x+viz_button_w/2, viz_button_y + 112, btn_text2, NULL);
 
-  nvgFontFace(s->vg, "sans-semibold");
+  nvgFontFace(s->vg, "Montserrat-semibold");
   nvgFontSize(s->vg, 28*2.5);
   nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 255));
   nvgText(s->vg, viz_button_x+viz_button_w/2, viz_button_y + 85,btn_text, NULL);
@@ -856,8 +856,16 @@ void bb_ui_draw_UI( UIState *s) {
     //bb_ui_draw_car(s);
 	 }
 	 if (s->b.tri_state_switch ==3) {
-	 	//ui_draw_vision_grid(s);
-		draw_date_time(s);
+	 	const UIScene *scene = &s->scene;
+	  const int bb_dml_w = 180;
+	  const int bb_dml_x =  (scene->ui_viz_rx + (bdr_s*2));
+	  const int bb_dml_y = (box_y + (bdr_s*1.5))+220;
+	  
+	  const int bb_dmr_w = 180;
+	  const int bb_dmr_x = scene->ui_viz_rx + scene->ui_viz_rw - bb_dmr_w - (bdr_s*2) ; 
+	  const int bb_dmr_y = (box_y + (bdr_s*1.5))+220;
+    bb_ui_draw_custom_alert(s);
+    draw_date_time(s);
 	 }
 }
 
