@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
   NVGcontext *vg = nvgCreateGLES3(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
   assert(vg);
 
-  int font = nvgCreateFont(vg, "Bold", "../../assets/Montserrat-ExtraBold.ttf");
+  int font = nvgCreateFont(vg, "Bold", "../../assets/OpenSans-ExtraBold.ttf");
   assert(font >= 0);
 
   int spinner_img = nvgCreateImage(vg, "../../assets/img_spinner_track.png", 0);
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
     if (spintext) {
       nvgTextAlign(vg, NVG_ALIGN_CENTER | NVG_ALIGN_TOP);
       nvgFontSize(vg, 96.0f);
-      nvgText(vg, fb_w/2, (fb_h*2/3)+24, "Loading OpenPilot...", NULL);
+      nvgText(vg, fb_w/2, (fb_h*2/3)+24, spintext, NULL);
     }
 
     nvgEndFrame(vg);
