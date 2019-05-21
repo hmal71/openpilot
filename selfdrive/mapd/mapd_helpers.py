@@ -1,4 +1,3 @@
-import six
 import math
 import json
 import numpy as np
@@ -92,7 +91,7 @@ def geocode_maxspeed(tags, location_info):
       rule_valid = all(
         tag_name in tags
         and tags[tag_name] == value
-        for tag_name, value in six.iteritems(rule['tags'])
+        for tag_name, value in rule['tags'].items()
       )
       if rule_valid:
         max_speed = rule['speed']
@@ -103,7 +102,7 @@ def geocode_maxspeed(tags, location_info):
       rule_valid = all(
         tag_name in tags
         and tags[tag_name] == value
-        for tag_name, value in six.iteritems(rule['tags'])
+        for tag_name, value in rule['tags'].items()
       )
       if rule_valid:
         max_speed = rule['speed']
@@ -191,6 +190,10 @@ class Way:
       if closest_way is None or score < best_score:
         closest_way = way
         best_score = score
+
+    # Normal score is < 5
+    if best_score > 50:
+      return None
 
     return closest_way
 
