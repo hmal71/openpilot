@@ -166,6 +166,8 @@ class CarState(object):
     self.prev_left_blinker_on = False
     self.right_blinker_on = False
     self.prev_right_blinker_on = False
+    self.right_blinker_counter = 0
+    self.left_blinker_counter = 0
     self.steer_torque_driver = 0
     self.steer_not_allowed = False
     self.main_on = False
@@ -252,8 +254,25 @@ class CarState(object):
 
     self.prev_left_blinker_on = self.left_blinker_on
     self.prev_right_blinker_on = self.right_blinker_on
-    self.left_blinker_on = cp.vl["Dashlights"]['LEFT_BLINKER'] == 1
-    self.right_blinker_on = cp.vl["Dashlights"]['RIGHT_BLINKER'] == 1
+    if cp.vl["Dashlights"]['LEFT_BLINKER'] == 1:
+      self.left_blinker_counter = 400
+      self.left_blinker_on = True
+    else:
+      if self.left_blinker_counter == 0:
+        self.left_blinker_on = False
+      else:
+        self.left_blinker_counter = self.left_blinker_counter -1
+
+     
+    if cp.vl["Dashlights"]['RIGHT_BLINKER'] == 1:
+      self.right_blinker_counter = 400
+      self.right_blinker_on = True
+    else:
+      if self.right_blinker_counter == 0:
+        self.right_blinker_on = False
+      else:
+        self.right_blinker_counter = self.right_blinker_counter -1
+
     self.seatbelt_unlatched = cp.vl["Dashlights"]['SEATBELT_FL'] == 1
     self.steer_torque_driver = cp.vl["Steering_Torque"]['Steer_Torque_Sensor']
     self.steer_torque_motor = cp.vl["Steering_Torque"]['Steer_Torque_Output']

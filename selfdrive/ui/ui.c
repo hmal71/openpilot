@@ -1354,8 +1354,8 @@ static void ui_draw_vision_event(UIState *s) {
   const int viz_event_h = (header_h - (bdr_s*1.5));
   if (s->scene.decel_for_turn && s->scene.engaged && s->limit_set_speed) {
     // draw winding road sign
-    const int img_turn_size = 160*1.5;
-    const int img_turn_x = viz_event_x-(img_turn_size/4);
+    const int img_turn_size = 160;
+    const int img_turn_x = viz_event_x-(img_turn_size/4)+80;
     const int img_turn_y = viz_event_y+bdr_s-25;
     float img_turn_alpha = 1.0f;
     nvgBeginPath(s->vg);
@@ -2323,7 +2323,7 @@ int main() {
   err = pthread_create(&bg_thread_handle, NULL,
                        bg_thread, s);
   assert(err == 0);
-
+  s->b.touch_last_width = s->scene.ui_viz_rw;
   TouchState touch = {0};
   touch_init(&touch);
   s->touch_fd = touch.fd;
@@ -2391,7 +2391,7 @@ int main() {
       }
     } else {
       // Car started, fetch a new rgb image from ipc and peek for zmq events.
-      touched = touch_poll(&touch, &touch_x, &touch_y, s->awake ? 2 : 500);
+      touched = touch_poll(&touch, &touch_x, &touch_y, s->awake ? 5 : 500);
       //touched = touch_read(&touch, &touch_x, &touch_y);
       ui_update(s);
       if(!s->vision_connected) {
@@ -2407,17 +2407,18 @@ int main() {
       s->b.touch_last_x = touch_x;
       s->b.touch_last_y = touch_y;
       s->b.touch_timeout = touch_timeout;
-      s->b.touch_last_width = s->scene.ui_viz_rw;
     }
     //BB check touch
-    if ((s->b.touch_last) && (s->b.touch_last_width != s->scene.ui_viz_rw)) {
-      bb_handle_ui_touch(s,s->b.touch_last_x,s->b.touch_last_y);
-      dc_touch_x = s->b.touch_last_x;
-      dc_touch_y = s->b.touch_last_y;
-      s->b.touch_last = false;
-      s->b.touch_last_x = 0;
-      s->b.touch_last_y = 0;
-      s->b.touch_last_width=s->scene.ui_viz_rw;
+    if (s->b.touch_last) {
+      if (s->b.touch_last_width != s->scene.ui_viz_rw) {
+        s->b.touch_last_width=s->scene.ui_viz_rw;
+        bb_handle_ui_touch(s,s->b.touch_last_x,s->b.touch_last_y);
+        dc_touch_x = s->b.touch_last_x;
+        dc_touch_y = s->b.touch_last_y;
+        s->b.touch_last = false;
+        s->b.touch_last_x = 0;
+        s->b.touch_last_y = 0;
+      }
     }
     
     //s->b.touch_last_width = s->scene.ui_viz_rw;
