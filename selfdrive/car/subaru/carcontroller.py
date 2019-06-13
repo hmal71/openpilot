@@ -1,6 +1,5 @@
 #from common.numpy_fast import clip
 from common.realtime import sec_since_boot
-from selfdrive.boardd.boardd import can_list_to_can_capnp
 from selfdrive.car import apply_std_steer_torque_limits
 from selfdrive.car.subaru.carstate import CarState
 from selfdrive.car.subaru import subarucan
@@ -36,14 +35,13 @@ class CarController(object):
     self.es_lkas_cnt = -1
     self.counter = 0
 
-
     # Setup detection helper. Routes commands to
     # an appropriate CAN bus number.
     self.params = CarControllerParams(car_fingerprint)
     print(DBC)
     self.packer = CANPacker(DBC[car_fingerprint]['pt'])
 
-  def update(self, sendcan, enabled, CS, frame, actuators, pcm_cancel_cmd, visual_alert):
+  def update(self, enabled, CS, frame, actuators, pcm_cancel_cmd, visual_alert, left_line, right_line):
     """ Controls thread """
 
     P = self.params
@@ -55,7 +53,7 @@ class CarController(object):
 
     if (frame % P.STEER_STEP) == 0:
 
-      final_steer = actuators.steer if enabled and not CS.steer_not_allowed else 0.
+      final_steer = actuators.steer if enabled else 0.
       apply_steer = int(round(final_steer * P.STEER_MAX))
 
       # limits due to driver torque
@@ -66,7 +64,7 @@ class CarController(object):
 
       if self.car_fingerprint in (CAR.OUTBACK, CAR.LEGACY):
 
-        # add noise to prevent lkas fault from constant torque value over 1s
+        # add noise to prevent lkas fault from constant torque value for over 1s
         if enabled and apply_steer == self.apply_steer_last:
           self.counter =+ 1
           if self.counter == 50:
@@ -91,4 +89,8 @@ class CarController(object):
     if self.car_fingerprint in (CAR.OUTBACK, CAR.LEGACY) and pcm_cancel_cmd:
       can_sends.append(subarucan.create_door_control(self.packer))
 
-    sendcan.send(can_list_to_can_capnp(can_sends, msgtype='sendcan').to_bytes())
+    if self.es_lkas_cnt != CS.es_lkas_msg["Counter"]:
+      can_sends.append(subarucan.create_es_lkas(self.packer, CS.es_lkas_msg, visual_alert, left_line, right_line))
+      self.es_lkas_cnt = CS.es_lkas_msg["Counter"]
+
+    return can_sends
